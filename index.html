@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080808">
+
+    <title>PBST</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- SPLASH SCREEN -->
+    <section id="splashScreen" class="splash-screen">
+        <div class="logo-glow"></div>
+
+        <img src="logo.jpg" alt="PBST Logo" class="splash-logo">
+
+        <div class="splash-title">
+            <span>P</span><span>B</span><span>S</span><span>T</span>
+        </div>
+
+        <div class="loading-line">
+            <div class="loading-progress"></div>
+        </div>
+    </section>
+
+    <!-- MAIN APP -->
+    <div id="app" class="app hidden">
+
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="brand">
+                <img src="logo.jpg" alt="PBST" class="small-logo">
+                <div class="brand-text">
+                    <h1>PBST</h1>
+                    <p>Learn. Think. Grow.</p>
+                </div>
+            </div>
+
+            <div class="coin-box">
+                <span class="coin-dot"></span>
+                <span id="coinCount">0</span>
+                <span class="coin-label">Coins</span>
+            </div>
+        </header>
+
+        <!-- HOME -->
+        <main id="homeScreen" class="page active">
+
+            <section class="welcome-section">
+                <p class="eyebrow">YOUR JOURNEY STARTS HERE</p>
+                <h2>Think smarter.<br><span>Build your future.</span></h2>
+                <p class="welcome-description">
+                    Learn psychology, business and success tricks
+                    one step at a time.
+                </p>
+            </section>
+
+            <!-- TASKS CARD -->
+            <section class="tasks-card">
+                <div class="task-card-top">
+                    <div>
+                        <p class="eyebrow">DAILY LEARNING</p>
+                        <h3>Knowledge Tasks</h3>
+                    </div>
+                    <span class="task-badge">LEVEL 1</span>
+                </div>
+
+                <p class="card-description">
+                    Answer three questions and earn coins
+                    for your correct answers.
+                </p>
+
+                <div class="task-info">
+                    <span>3 Questions</span>
+                    <span>Up to 2 Coins</span>
+                </div>
+
+                <button class="primary-button" onclick="openTasks()">
+                    Start Tasks <span>→</span>
+                </button>
+            </section>
+
+            <!-- VIDEO FEED -->
+            <section class="feed-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">DISCOVER</p>
+                        <h3>Learning Feed</h3>
+                    </div>
+                </div>
+
+                <div id="videoFeed" class="video-grid">
+                    <div class="empty-feed">
+                        <div class="empty-feed-icon"></div>
+                        <h4>Your feed starts here</h4>
+                        <p>Videos you add will appear here.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- TASKS PAGE -->
+        <main id="tasksScreen" class="page hidden">
+
+            <button class="back-button" onclick="showPage('home')">
+                ← Back to Home
+            </button>
+
+            <section class="quiz-heading">
+                <p class="eyebrow">PBST LEARNING</p>
+                <h2>Knowledge Challenge</h2>
+                <p>Test your understanding and grow your knowledge.</p>
+            </section>
+
+            <section id="quizCard" class="quiz-card">
+                <div class="quiz-top">
+                    <span id="questionNumber">QUESTION 1 OF 3</span>
+                    <span id="levelLabel">LEVEL 1</span>
+                </div>
+
+                <div class="progress-track">
+                    <div id="quizProgress" class="progress-fill"></div>
+                </div>
+
+                <p id="questionCategory" class="question-category">PSYCHOLOGY</p>
+                <h3 id="questionText">Loading question...</h3>
+
+                <div id="answerOptions" class="answer-options"></div>
+                <p id="answerFeedback" class="answer-feedback"></p>
+
+                <button id="nextButton" class="primary-button" disabled>
+                    Check Answer
+                </button>
+            </section>
+
+            <section id="quizResult" class="result-card hidden">
+                <p class="eyebrow">LEVEL COMPLETE</p>
+                <h2 id="resultTitle">Level Complete</h2>
+                <p id="resultMessage"></p>
+
+                <div class="result-score">
+                    <span id="correctCount">0</span>
+                    <span> / 3 correct</span>
+                </div>
+
+                <p id="earnedCoins" class="earned-coins"></p>
+
+                <button class="primary-button" onclick="restartQuiz()">
+                    Play Again
+                </button>
+
+                <button class="secondary-button" onclick="showPage('home')">
+                    Back to Home
+                </button>
+            </section>
+        </main>
+
+        <!-- UPLOAD PAGE -->
+        <main id="uploadScreen" class="page hidden">
+            <section class="page-intro">
+                <p class="eyebrow">CREATE & SHARE</p>
+                <h2>Upload Video</h2>
+                <p>Add a learning video to your PBST feed.</p>
+            </section>
+
+            <section class="upload-card">
+                <div class="upload-symbol"></div>
+                <h3>Choose a video</h3>
+                <p>Select a video from your device to preview it here.</p>
+
+                <label for="videoInput" class="primary-button upload-label">
+                    Select Video
+                </label>
+
+                <input type="file" id="videoInput" accept="video/*" hidden>
+
+                <div id="uploadPreview" class="upload-preview hidden">
+                    <video id="previewVideo" controls playsinline></video>
+                    <p id="selectedVideoName"></p>
+                    <button id="addVideoButton" class="primary-button">
+                        Add to My Feed
+                    </button>
+                </div>
+
+                <p class="small-note">
+                    Videos added here are available in this session.
+                </p>
+            </section>
+        </main>
+
+        <!-- BOTTOM NAVIGATION -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-page="home"
+                    onclick="showPage('home')">
+                <span class="nav-icon home-icon"></span>
+                <span>Home</span>
+            </button>
+
+            <button class="nav-item" data-page="upload"
+                    onclick="showPage('upload')">
+                <span class="nav-icon upload-icon"></span>
+                <span>Upload</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- FULL-SCREEN VIDEO VIEWER -->
+    <section id="videoViewer" class="video-viewer hidden"
+             aria-label="Full-screen video">
+
+        <button id="closeViewer" class="close-viewer"
+                aria-label="Close video">×</button>
+
+        <video id="fullScreenVideo" playsinline controls></video>
+
+        <!-- ONLY BRAIN LIKE AND COMMENT ON LEFT -->
+        <div class="side-actions">
+            <button id="brainLikeButton" class="action-button"
+                    aria-label="Brain Like">
+                <span class="brain" aria-hidden="true">🧠</span>
+                <span id="likeCount">0</span>
+            </button>
+
+            <button id="commentButton" class="action-button"
+                    aria-label="Comments">
+                <span class="comment-icon" aria-hidden="true">▢</span>
+                <span id="commentCount">0</span>
+            </button>
+        </div>
+
+        <div id="commentPanel" class="comment-panel hidden">
+            <div class="comment-heading">
+                <strong>Comments</strong>
+                <button id="closeComments" aria-label="Close comments">×</button>
+            </div>
+
+            <div id="commentList" class="comment-list"></div>
+
+            <form id="commentForm" class="comment-box">
+                <input id="commentInput" type="text"
+                       placeholder="Write a comment..."
+                       maxlength="300" autocomplete="off">
+                <button type="submit">Post</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+  </html>
